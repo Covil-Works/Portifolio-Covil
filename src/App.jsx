@@ -1,4 +1,29 @@
+import { useState } from 'react'
 import ProjectCard from './components/ProjectCard.jsx'
+import bgLight from '../img/bg-light.svg'
+import bgDark from '../img/bg-dark.svg'
+import stack1Light from '../img/stack1-light.svg'
+import stack1Dark from '../img/stack1-dark.svg'
+import stack2Light from '../img/stack2-light.svg'
+import stack2Dark from '../img/stack2-dark.svg'
+import stack3Light from '../img/stack3-light.svg'
+import stack3Dark from '../img/stack3-dark.svg'
+
+const MOBILE_STACK_START = 20
+const MOBILE_STACK_GAP = 10
+const DESKTOP_STACK_START = 300
+const DESKTOP_STACK_GAP = 30
+const DESKTOP_STACK_3_TOP = DESKTOP_STACK_START + DESKTOP_STACK_GAP * 2
+
+const heroStacks = [
+  { light: stack1Light, dark: stack1Dark },
+  { light: stack2Light, dark: stack2Dark },
+  { light: stack3Light, dark: stack3Dark },
+].map((stack, index) => ({
+  ...stack,
+  desktopTop: DESKTOP_STACK_START + DESKTOP_STACK_GAP * index,
+  mobileTop: MOBILE_STACK_START + MOBILE_STACK_GAP * index,
+}))
 
 const projects = [
   { name: 'Projeto A', stack: 'Kotlin · PostgreSQL', device: 'phone', image: null, imageAlt: 'Tela do Projeto A' },
@@ -8,9 +33,57 @@ const projects = [
 ]
 
 function App() {
+  const [heroTheme, setHeroTheme] = useState('light')
+
+  const toggleHeroTheme = () => {
+    setHeroTheme((currentTheme) => currentTheme === 'light' ? 'dark' : 'light')
+  }
+
   return (
     <main>
-      <section className="hero">
+      <section
+        className="hero"
+        data-theme={heroTheme}
+        style={{ '--stack-3-top-desktop': `${DESKTOP_STACK_3_TOP}px` }}
+      >
+        <div className="hero__background" aria-hidden="true">
+          <img className="hero__background-image hero__background-image--light" src={bgLight} alt="" />
+          <img className="hero__background-image hero__background-image--dark" src={bgDark} alt="" />
+
+          {heroStacks.map((stack, index) => (
+            <div
+              className={`hero__stack hero__stack--${index + 1}`}
+              key={stack.light}
+              style={{
+                '--stack-top-desktop': `${stack.desktopTop}px`,
+                '--stack-top-mobile': `${stack.mobileTop}px`,
+              }}
+            >
+              <img className="hero__stack-image hero__stack-image--light" src={stack.light} alt="" />
+              <img className="hero__stack-image hero__stack-image--dark" src={stack.dark} alt="" />
+            </div>
+          ))}
+        </div>
+
+        <button
+          className="theme-toggle"
+          type="button"
+          onClick={toggleHeroTheme}
+          aria-label={`Ativar modo ${heroTheme === 'light' ? 'escuro' : 'claro'}`}
+          aria-pressed={heroTheme === 'dark'}
+        >
+          {heroTheme === 'light' ? (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5a8.5 8.5 0 1 0 10.6 10.6Z" />
+            </svg>
+          )}
+        </button>
+
         <div className="content hero__content">
           <header className="identity">
             <span className="logo" aria-hidden="true">AP</span>
