@@ -1,0 +1,44 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: oklch(0.18 0 0);
+  background: oklch(1 0 0);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.home {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem;
+}
+
+.home h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-align: center;
+  text-wrap: balance;
+}
