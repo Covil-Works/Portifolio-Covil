@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ProjectCard from './components/ProjectCard.jsx'
 import bgLight from '../img/bg-light.svg'
 import bgDark from '../img/bg-dark.svg'
@@ -8,12 +8,26 @@ import stack2Light from '../img/stack2-light.svg'
 import stack2Dark from '../img/stack2-dark.svg'
 import stack3Light from '../img/stack3-light.svg'
 import stack3Dark from '../img/stack3-dark.svg'
+import arthurPhoto from '../img/arthur.png'
 
 const MOBILE_STACK_START = 20
 const MOBILE_STACK_GAP = 10
 const DESKTOP_STACK_START = 300
 const DESKTOP_STACK_GAP = 30
 const DESKTOP_STACK_3_TOP = DESKTOP_STACK_START + DESKTOP_STACK_GAP * 2
+const HERO_CONTENT_OFFSET_Y = -100
+const MOBILE_HERO_NAME_OFFSET_Y = -110
+const MOBILE_HERO_PHOTO_OFFSET_Y = -140
+const MOBILE_HERO_MENU_OFFSET_Y = -150
+const HERO_CONTENT_FADE = {
+  start: 0.55,
+  end: 0.8,
+}
+const STACK_SCROLL_SPEED = {
+  desktop: [1, 0.7, 0.4],
+  mobile: [0.8, 0.55, 0.3],
+}
+const DESKTOP_PARALLAX_DISTANCE = 60
 
 const heroStacks = [
   { light: stack1Light, dark: stack1Dark },
@@ -34,6 +48,68 @@ const projects = [
 
 function App() {
   const [heroTheme, setHeroTheme] = useState('light')
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return undefined
+
+    const stacks = Array.from(hero.querySelectorAll('.hero__stack'))
+    const about = document.querySelector('.about')
+    const mobileQuery = window.matchMedia('(max-width: 760px)')
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let frameId = null
+
+    const updateParallax = () => {
+      frameId = null
+      const heroRect = hero.getBoundingClientRect()
+      const scrollOffset = reducedMotionQuery.matches
+        ? 0
+        : Math.min(Math.max(-heroRect.top, 0), heroRect.height)
+      const speeds = mobileQuery.matches
+        ? STACK_SCROLL_SPEED.mobile
+        : STACK_SCROLL_SPEED.desktop
+      const scrollProgress = heroRect.height > 0 ? scrollOffset / heroRect.height : 0
+      const fadeProgress = Math.min(Math.max(
+        (scrollProgress - HERO_CONTENT_FADE.start)
+          / (HERO_CONTENT_FADE.end - HERO_CONTENT_FADE.start),
+        0,
+      ), 1)
+      const contentOpacity = 1 - fadeProgress
+      const introScroll = Math.min(scrollOffset, DESKTOP_PARALLAX_DISTANCE)
+      const contentScrollOffset = mobileQuery.matches ? scrollOffset : introScroll
+      const stackOffsets = mobileQuery.matches
+        ? speeds.map((speed) => scrollOffset * speed)
+        : speeds.map((speed) => introScroll * speed)
+
+      hero.style.setProperty('--hero-scroll-offset', `${contentScrollOffset}px`)
+      hero.style.setProperty('--hero-content-opacity', contentOpacity)
+      hero.toggleAttribute('data-content-hidden', contentOpacity === 0)
+      if (about) about.style.marginTop = `${-stackOffsets[2]}px`
+      stacks.forEach((stack, index) => {
+        stack.style.setProperty('--stack-parallax-y', `${-stackOffsets[index]}px`)
+      })
+    }
+
+    const requestParallaxUpdate = () => {
+      if (frameId === null) frameId = window.requestAnimationFrame(updateParallax)
+    }
+
+    updateParallax()
+    window.addEventListener('scroll', requestParallaxUpdate, { passive: true })
+    window.addEventListener('resize', requestParallaxUpdate)
+    mobileQuery.addEventListener('change', requestParallaxUpdate)
+    reducedMotionQuery.addEventListener('change', requestParallaxUpdate)
+
+    return () => {
+      if (frameId !== null) window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', requestParallaxUpdate)
+      window.removeEventListener('resize', requestParallaxUpdate)
+      mobileQuery.removeEventListener('change', requestParallaxUpdate)
+      reducedMotionQuery.removeEventListener('change', requestParallaxUpdate)
+      if (about) about.style.removeProperty('margin-top')
+    }
+  }, [])
 
   const toggleHeroTheme = () => {
     setHeroTheme((currentTheme) => currentTheme === 'light' ? 'dark' : 'light')
@@ -42,28 +118,36 @@ function App() {
   return (
     <main>
       <section
+        ref={heroRef}
         className="hero"
         data-theme={heroTheme}
-        style={{ '--stack-3-top-desktop': `${DESKTOP_STACK_3_TOP}px` }}
+        style={{
+          '--stack-3-top-desktop': `${DESKTOP_STACK_3_TOP}px`,
+          '--hero-content-offset-y': `${HERO_CONTENT_OFFSET_Y}px`,
+          '--mobile-hero-name-offset-y': `${MOBILE_HERO_NAME_OFFSET_Y}px`,
+          '--mobile-hero-photo-offset-y': `${MOBILE_HERO_PHOTO_OFFSET_Y}px`,
+          '--mobile-hero-menu-offset-y': `${MOBILE_HERO_MENU_OFFSET_Y}px`,
+        }}
       >
         <div className="hero__background" aria-hidden="true">
           <img className="hero__background-image hero__background-image--light" src={bgLight} alt="" />
           <img className="hero__background-image hero__background-image--dark" src={bgDark} alt="" />
-
-          {heroStacks.map((stack, index) => (
-            <div
-              className={`hero__stack hero__stack--${index + 1}`}
-              key={stack.light}
-              style={{
-                '--stack-top-desktop': `${stack.desktopTop}px`,
-                '--stack-top-mobile': `${stack.mobileTop}px`,
-              }}
-            >
-              <img className="hero__stack-image hero__stack-image--light" src={stack.light} alt="" />
-              <img className="hero__stack-image hero__stack-image--dark" src={stack.dark} alt="" />
-            </div>
-          ))}
         </div>
+
+        {heroStacks.map((stack, index) => (
+          <div
+            className={`hero__stack hero__stack--${index + 1}`}
+            key={stack.light}
+            style={{
+              '--stack-top-desktop': `${stack.desktopTop}px`,
+              '--stack-top-mobile': `${stack.mobileTop}px`,
+            }}
+            aria-hidden="true"
+          >
+            <img className="hero__stack-image hero__stack-image--light" src={stack.light} alt="" />
+            <img className="hero__stack-image hero__stack-image--dark" src={stack.dark} alt="" />
+          </div>
+        ))}
 
         <button
           className="theme-toggle"
@@ -85,17 +169,25 @@ function App() {
         </button>
 
         <div className="content hero__content">
-          <header className="identity">
-            <span className="logo" aria-hidden="true">AP</span>
-            <div><small>PORTFÓLIO</small><h1>Arthur Pimentel</h1></div>
-          </header>
+          <div className="hero__layer hero__menu-layer">
+            <nav aria-label="Navegação principal">
+              <a href="#sobre">Sobre</a>
+              <a href="#tecnologias">Tecnologias</a>
+              <a href="#projetos">Projetos</a>
+              <a href="#contato">Contato</a>
+            </nav>
+          </div>
 
-          <nav aria-label="Navegação principal">
-            <a href="#sobre">Sobre</a>
-            <a href="#tecnologias">Tecnologias</a>
-            <a href="#projetos">Projetos</a>
-            <a href="#contato">Contato</a>
-          </nav>
+          <div className="hero__layer hero__photo-layer" aria-hidden="true">
+            <img className="hero__photo" src={arthurPhoto} alt="" />
+          </div>
+
+          <div className="hero__layer hero__name-layer">
+            <header className="hero__name">
+              <small>PORTFÓLIO</small>
+              <h1>Arthur Pimentel</h1>
+            </header>
+          </div>
         </div>
       </section>
 
