@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-12T00:00:00-03:00",
+  "title": "Design System: Portfólio Arthur Pimentel",
+  "extensions": {
+    "typographyMeta": {
+      "display": {
+        "displayName": "Poppins Display",
+        "purpose": "Nome e títulos."
+      },
+      "body": {
+        "displayName": "Poppins Body",
+        "purpose": "Tipografia padrão."
+      }
+    },
+    "motion": [
+      {
+        "name": "state-fast",
+        "value": "180ms ease-out",
+        "purpose": "Estados curtos."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "460px"
+      },
+      {
+        "name": "stack",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Clareza Técnica",
+    "overview": "Estrutura precisa, tipografia forte e espaços generosos.",
+    "keyCharacteristics": [
+      "Poppins global",
+      "Conteúdo limitado a 1200px",
+      "Componentes planos",
+      "Mockups de dispositivos"
+    ],
+    "rules": [
+      {
+        "name": "The Poppins Rule",
+        "body": "Poppins é obrigatória.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do usar Poppins em toda a interface."
+    ],
+    "donts": [
+      "Don't introduzir outra tipografia sem revisar o sistema."
+    ]
+  }
+}
