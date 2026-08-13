@@ -52,7 +52,7 @@ a { color: inherit; }
 .hero[data-theme="dark"] .hero__background-image--dark { opacity: 1; }
 .hero__birds {
   position: absolute;
-  top: clamp(3.5rem, 9vw, 7rem);
+  top: calc(clamp(3.5rem, 9vw, 7rem) - 10px);
   left: 0;
   z-index: 1;
   width: 100%;
