@@ -156,6 +156,19 @@ function App() {
           </div>
         ))}
 
+        <div className="hero__fireflies hero__fireflies--between-back" aria-hidden="true">
+          <span className="hero__firefly hero__firefly--1" />
+          <span className="hero__firefly hero__firefly--2" />
+        </div>
+        <div className="hero__fireflies hero__fireflies--between-front" aria-hidden="true">
+          <span className="hero__firefly hero__firefly--3" />
+        </div>
+        <div className="hero__fireflies hero__fireflies--foreground" aria-hidden="true">
+          <span className="hero__firefly hero__firefly--4" />
+          <span className="hero__firefly hero__firefly--5" />
+          <span className="hero__firefly hero__firefly--6" />
+        </div>
+
         <button
           className="theme-toggle"
           type="button"

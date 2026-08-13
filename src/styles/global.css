@@ -141,6 +141,61 @@ a { color: inherit; }
 .hero__stack-image--dark { opacity: 0; }
 .hero[data-theme="dark"] .hero__stack-image--light { opacity: 0; }
 .hero[data-theme="dark"] .hero__stack-image--dark { opacity: 1; }
+.hero__fireflies {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 650ms;
+}
+.hero[data-theme="dark"] .hero__fireflies {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+.hero__fireflies--between-back { z-index: 3; }
+.hero__fireflies--between-front { z-index: 5; }
+.hero__fireflies--foreground { z-index: 6; }
+.hero__firefly {
+  position: absolute;
+  top: var(--firefly-y);
+  left: var(--firefly-x);
+  width: var(--firefly-size, 5px);
+  aspect-ratio: 1;
+  animation: firefly-drift var(--firefly-drift-duration) linear infinite;
+}
+.hero__firefly::before {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 7px 3px rgb(166 255 130 / 90%),
+    0 0 20px 9px rgb(74 255 101 / 48%),
+    0 0 38px 15px rgb(35 207 84 / 20%);
+  content: "";
+  animation: firefly-blink var(--firefly-blink-duration) ease-in-out var(--firefly-blink-delay, 0s) infinite;
+}
+.hero__firefly--1 { --firefly-x: 18%; --firefly-y: 47%; --firefly-size: 1px; --firefly-drift-duration: 12.4s; --firefly-blink-duration: 4.1s; --firefly-blink-delay: -1.2s; --drift-x-1: 28px; --drift-y-1: -18px; --drift-x-2: -20px; --drift-y-2: 24px; --drift-x-3: 16px; --drift-y-3: 31px; }
+.hero__firefly--2 { --firefly-x: 76%; --firefly-y: 52%; --firefly-size: 4px; --firefly-drift-duration: 15.2s; --firefly-blink-duration: 5.3s; --firefly-blink-delay: -3.4s; --drift-x-1: -34px; --drift-y-1: 16px; --drift-x-2: 21px; --drift-y-2: -27px; --drift-x-3: -18px; --drift-y-3: -35px; }
+.hero__firefly--3 { --firefly-x: 88%; --firefly-y: 61%; --firefly-size: 2px; --firefly-drift-duration: 10.8s; --firefly-blink-duration: 3.7s; --firefly-blink-delay: -0.8s; --drift-x-1: -26px; --drift-y-1: -23px; --drift-x-2: 12px; --drift-y-2: 19px; --drift-x-3: -31px; --drift-y-3: 28px; }
+.hero__firefly--4 { --firefly-x: 8%; --firefly-y: 82%; --firefly-size: 5px; --firefly-drift-duration: 13.7s; --firefly-blink-duration: 4.8s; --firefly-blink-delay: -2.1s; --drift-x-1: 38px; --drift-y-1: -22px; --drift-x-2: 17px; --drift-y-2: 30px; --drift-x-3: -24px; --drift-y-3: -14px; }
+.hero__firefly--5 { --firefly-x: 91%; --firefly-y: 78%; --firefly-size: 5px; --firefly-drift-duration: 16.1s; --firefly-blink-duration: 5.6s; --firefly-blink-delay: -4.3s; --drift-x-1: -42px; --drift-y-1: 20px; --drift-x-2: -13px; --drift-y-2: -34px; --drift-x-3: 26px; --drift-y-3: 11px; }
+.hero__firefly--6 { --firefly-x: 73%; --firefly-y: 89%; --firefly-size: 5px; --firefly-drift-duration: 11.6s; --firefly-blink-duration: 4.4s; --firefly-blink-delay: -1.7s; --drift-x-1: 31px; --drift-y-1: -29px; --drift-x-2: -25px; --drift-y-2: -12px; --drift-x-3: 18px; --drift-y-3: 24px; }
+@keyframes firefly-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  24% { transform: translate3d(var(--drift-x-1), var(--drift-y-1), 0); }
+  53% { transform: translate3d(var(--drift-x-2), var(--drift-y-2), 0); }
+  78% { transform: translate3d(var(--drift-x-3), var(--drift-y-3), 0); }
+}
+@keyframes firefly-blink {
+  0%, 58%, 100% { opacity: 1; filter: brightness(1); }
+  64% { opacity: 0.38; filter: brightness(0.72); }
+  70% { opacity: 0.92; filter: brightness(1.08); }
+  76% { opacity: 0.55; filter: brightness(0.82); }
+  84% { opacity: 1; filter: brightness(1); }
+}
 @media (min-width: 761px) {
   .hero__stack { right: -5px; left: -5px; }
   .hero__layer { transform: translate3d(0, calc(var(--hero-content-offset-y) + var(--hero-scroll-offset, 0px)), 0); }
@@ -337,6 +392,7 @@ aside p { margin: 0; color: var(--muted); line-height: 1.5; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero__bird { animation: none; }
+  .hero__firefly, .hero__firefly::before { animation: none; }
   .hero__bird--1 { left: 20%; }
   .hero__bird--2 { left: 48%; }
   .hero__bird--3 { left: 76%; }
