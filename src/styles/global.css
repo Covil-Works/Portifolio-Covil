@@ -360,6 +360,12 @@ aside p { margin: 0; color: var(--muted); line-height: 1.5; }
   .hero { --hero-photo-size: clamp(6.5rem, 11.7vw, 10.4rem); }
 }
 @media (max-width: 760px) {
+  .hero__firefly--1,
+  .hero__firefly--5,
+  .hero__firefly--6 { display: none; }
+  .hero__firefly--2 { --firefly-size: 2px; }
+  .hero__firefly--3 { --firefly-size: 1px; }
+  .hero__firefly--4 { --firefly-size: 3px; }
   .hero {
     --composition-width: calc(294.7368421svh - 117.8947368px);
     --hero-photo-size: clamp(6rem, 10.8vw, 9.6rem);
