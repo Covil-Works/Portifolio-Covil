@@ -126,7 +126,7 @@ function ExperienceDetails({ experience, onClose }) {
 }
 
 function App() {
-  const [heroTheme, setHeroTheme] = useState('light')
+  const [heroTheme, setHeroTheme] = useState('dark')
   const [activeExperience, setActiveExperience] = useState(0)
   const heroRef = useRef(null)
   const experienceRef = useRef(null)
