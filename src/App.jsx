@@ -1,4 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
+import { FaLinkedin } from 'react-icons/fa'
+import { MdEmail } from 'react-icons/md'
+import {
+  SiGithub,
+  SiKotlin,
+  SiNextdotjs,
+  SiOpenjdk,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiSpringboot,
+  SiWhatsapp,
+} from 'react-icons/si'
 import ProjectCard from './components/ProjectCard.jsx'
 import bgLight from '../img/bg-light.svg'
 import bgDark from '../img/bg-dark.svg'
@@ -72,6 +85,16 @@ const experiences = [
   },
 ]
 
+const technologies = [
+  { name: 'React', icon: SiReact },
+  { name: 'Next.js', icon: SiNextdotjs },
+  { name: 'Kotlin', icon: SiKotlin },
+  { name: 'PostgreSQL', icon: SiPostgresql },
+  { name: 'Spring Boot', icon: SiSpringboot },
+  { name: 'Java', icon: SiOpenjdk },
+  { name: 'Python', icon: SiPython },
+]
+
 const projects = [
   { name: 'Projeto A', stack: 'Kotlin · PostgreSQL', device: 'phone', image: null, imageAlt: 'Tela do Projeto A' },
   { name: 'Projeto B', stack: 'Next.js · PostgreSQL', device: 'desktop', image: null, imageAlt: 'Tela do Projeto B' },
@@ -80,15 +103,18 @@ const projects = [
 ]
 
 const contactChannels = [
-  { label: 'LinkedIn', href: null },
-  { label: 'GitHub', href: 'https://github.com/Covil-Works' },
-  { label: 'E-mail', href: null },
-  { label: 'WhatsApp', href: null },
+  { label: 'LinkedIn', href: null, icon: FaLinkedin },
+  { label: 'GitHub', href: 'https://github.com/Covil-Works', icon: SiGithub },
+  { label: 'E-mail', href: null, icon: MdEmail },
+  { label: 'WhatsApp', href: null, icon: SiWhatsapp },
 ]
 
-function ExperienceDetails({ experience }) {
+function ExperienceDetails({ experience, onClose }) {
   return (
     <div className="experience__detail-content">
+      {onClose && (
+        <button className="experience__detail-close" type="button" onClick={onClose} aria-label={`Recolher ${experience.name}`}>−</button>
+      )}
       <small>{experience.context}</small>
       <h3>{experience.name}</h3>
       <p>{experience.description}</p>
@@ -103,6 +129,7 @@ function App() {
   const [heroTheme, setHeroTheme] = useState('light')
   const [activeExperience, setActiveExperience] = useState(0)
   const heroRef = useRef(null)
+  const experienceRef = useRef(null)
 
   useEffect(() => {
     const hero = heroRef.current
@@ -165,6 +192,65 @@ function App() {
       mobileQuery.removeEventListener('change', requestParallaxUpdate)
       reducedMotionQuery.removeEventListener('change', requestParallaxUpdate)
       if (about) about.style.removeProperty('margin-top')
+    }
+  }, [])
+
+  useEffect(() => {
+    const experienceSection = experienceRef.current
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (!experienceSection || reducedMotionQuery.matches) return undefined
+
+    const items = Array.from(experienceSection.querySelectorAll('.experience__timeline > li'))
+    const mobileQuery = window.matchMedia('(max-width: 760px)')
+    let frameId = null
+    let lastScrollY = window.scrollY
+
+    const updateExperienceNudges = () => {
+      frameId = null
+      const currentScrollY = window.scrollY
+      const isScrollingDown = currentScrollY >= lastScrollY
+      lastScrollY = currentScrollY
+      if (!isScrollingDown) return
+
+      if (mobileQuery.matches) {
+        const triggerLine = window.innerHeight * 0.82
+        items.forEach((item) => {
+          const itemRect = item.getBoundingClientRect()
+          if (itemRect.top <= triggerLine && itemRect.bottom >= 0) item.classList.add('is-nudging')
+        })
+        return
+      }
+
+      const sectionRect = experienceSection.getBoundingClientRect()
+      const progressStart = window.innerHeight * 0.82
+      const progressEnd = window.innerHeight * 0.42
+      if (sectionRect.top > progressStart || sectionRect.bottom < 0) return
+
+      const progress = Math.min(Math.max(
+        (progressStart - sectionRect.top) / (progressStart - progressEnd),
+        0,
+      ), 1)
+
+      items.forEach((item, index) => {
+        const itemThreshold = items.length > 1 ? index / (items.length - 1) : 0
+        if (progress >= itemThreshold) item.classList.add('is-nudging')
+      })
+    }
+
+    const requestNudgeUpdate = () => {
+      if (frameId === null) frameId = window.requestAnimationFrame(updateExperienceNudges)
+    }
+
+    updateExperienceNudges()
+    window.addEventListener('scroll', requestNudgeUpdate, { passive: true })
+    window.addEventListener('resize', requestNudgeUpdate)
+    mobileQuery.addEventListener('change', requestNudgeUpdate)
+
+    return () => {
+      if (frameId !== null) window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', requestNudgeUpdate)
+      window.removeEventListener('resize', requestNudgeUpdate)
+      mobileQuery.removeEventListener('change', requestNudgeUpdate)
     }
   }, [])
 
@@ -274,7 +360,6 @@ function App() {
         <div className="about__intro">
           <h2>Sobre</h2>
           <p className="lead">Sou Arthur Pimentel. Desenvolvo experiências digitais e produtos que aproximam tecnologia, clareza e propósito.</p>
-          <a className="contact-link" href="#contato">Vamos conversar ↗</a>
         </div>
 
         <aside className="resume">
@@ -286,17 +371,18 @@ function App() {
         </aside>
 
         <div className="about__stack" id="tecnologias">
-          <span>Stack</span>
+          <span className="stack-heading">Stack</span>
           <ul>
-            <li>React</li><li>Next.js</li><li>Kotlin</li><li>PostgreSQL</li><li>Spring Boot</li><li>Java</li><li>Python</li>
+            {technologies.map(({ name, icon: Icon }) => (
+              <li key={name}><Icon aria-hidden="true" /><span>{name}</span></li>
+            ))}
           </ul>
         </div>
       </section>
 
-      <section className="experience content" id="experiencia">
+      <section ref={experienceRef} className="experience content" id="experiencia">
         <header className="experience__header">
           <h2>Experiência</h2>
-          <p>Uma trajetória entre formação, pesquisa, dados e comunidade. Selecione um ponto para conhecer os detalhes.</p>
         </header>
 
         <div className="experience__layout">
@@ -306,24 +392,28 @@ function App() {
               const detailId = `experience-details-${index}`
 
               return (
-                <li className={isActive ? 'is-active' : ''} key={experience.name}>
+                <li
+                  className={isActive ? 'is-active' : ''}
+                  key={experience.name}
+                >
                   <button
                     type="button"
                     onClick={() => toggleExperience(index)}
                     aria-expanded={isActive}
                     aria-controls={detailId}
                   >
-                    <span className="experience__marker" aria-hidden="true">0{index + 1}</span>
-                    <span className="experience__label">
-                      <strong>{experience.name}</strong>
-                      <span>{experience.summary}</span>
+                    <span className="experience__main">
+                      <span className="experience__label">
+                        <strong>{experience.name}</strong>
+                        <span>{experience.summary}</span>
+                      </span>
                     </span>
                     <span className="experience__toggle" aria-hidden="true">{isActive ? '−' : '+'}</span>
                   </button>
 
                   <div className="experience__mobile-details" id={detailId} aria-hidden={!isActive}>
                     <div>
-                      <ExperienceDetails experience={experience} />
+                      <ExperienceDetails experience={experience} onClose={() => toggleExperience(index)} />
                     </div>
                   </div>
                 </li>
@@ -351,20 +441,21 @@ function App() {
 
       <section className="contact content" id="contato">
         <div className="section-title">
-          <small>DISPONÍVEL PARA NOVOS PROJETOS</small>
           <h2>Contato</h2>
         </div>
-        <p className="contact__intro">Escolha o canal que preferir para conversarmos.</p>
+        <p className="contact__intro">Conheça mais do meu trabalho ou entre em contato pelos canais abaixo.</p>
         <ul className="contact__channels">
-          {contactChannels.map((channel) => (
-            <li key={channel.label}>
-              {channel.href ? (
-                <a href={channel.href} target="_blank" rel="noreferrer">
-                  <span>{channel.label}</span><span aria-hidden="true">↗</span>
+          {contactChannels.map(({ label, href, icon: Icon }) => (
+            <li key={label}>
+              {href ? (
+                <a href={href} target="_blank" rel="noreferrer">
+                  <span className="contact__channel-label"><Icon aria-hidden="true" /><span>{label}</span></span>
+                  <span aria-hidden="true">↗</span>
                 </a>
               ) : (
                 <span className="contact__channel-pending">
-                  <span>{channel.label}</span><span>Link a definir</span>
+                  <span className="contact__channel-label"><Icon aria-hidden="true" /><span>{label}</span></span>
+                  <span>Link a definir</span>
                 </span>
               )}
             </li>
