@@ -21,6 +21,7 @@ a { color: inherit; }
 
 .hero {
   --composition-width: 100%;
+  --hero-bg-dark: #090b0d;
   --hero-photo-size: clamp(5rem, 9vw, 8rem);
   --hero-identity-gap: clamp(1rem, 2vw, 1.75rem);
   position: relative;
@@ -34,7 +35,7 @@ a { color: inherit; }
 .hero[data-theme="dark"] small { color: oklch(0.78 0.015 80); }
 .hero__background { position: absolute; inset: 0; }
 .hero__background { z-index: 0; background: #61afaf; }
-.hero[data-theme=dark] .hero__background { background: #090b0d; }
+.hero[data-theme=dark] .hero__background { background: var(--hero-bg-dark); }
 .hero__background-image {
   position: absolute;
   top: 0;
@@ -141,6 +142,7 @@ a { color: inherit; }
 .hero[data-theme="dark"] .hero__stack-image--light { opacity: 0; }
 .hero[data-theme="dark"] .hero__stack-image--dark { opacity: 1; }
 @media (min-width: 761px) {
+  .hero__stack { right: -5px; left: -5px; }
   .hero__layer { transform: translate3d(0, calc(var(--hero-content-offset-y) + var(--hero-scroll-offset, 0px)), 0); }
 }
 .theme-toggle {
@@ -201,6 +203,7 @@ a { color: inherit; }
   object-fit: cover;
 }
 small { color: var(--muted); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; }
+.hero__name small { color: var(--hero-bg-dark); }
 h1 {
   max-width: 9ch;
   margin: 0.5rem 0 0;
@@ -215,7 +218,9 @@ nav a::before { content: "—"; display: inline-block; margin-right: 0.65rem; tr
 nav a:hover::before, nav a:focus-visible::before { transform: translateX(0.35rem); }
 a:focus-visible { outline: 3px solid var(--honey); outline-offset: 5px; }
 
-.about, .technologies, .projects { padding-block: clamp(5rem, 10vw, 9rem); }
+.about { padding: clamp(5rem, 10vw, 9rem) 0 20px; }
+.technologies { padding-block: 20px; }
+.projects { padding: 20px 0 clamp(5rem, 10vw, 9rem); }
 .about {
   position: relative;
   z-index: 8;
