@@ -121,7 +121,7 @@ function App() {
   }
 
   return (
-    <main>
+    <main data-theme={heroTheme}>
       <section
         ref={heroRef}
         className="hero"
