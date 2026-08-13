@@ -177,11 +177,8 @@ function App() {
             </nav>
           </div>
 
-          <div className="hero__layer hero__photo-layer" aria-hidden="true">
-            <img className="hero__photo" src={arthurPhoto} alt="" />
-          </div>
-
-          <div className="hero__layer hero__name-layer">
+          <div className="hero__layer hero__identity-layer">
+            <img className="hero__photo" src={arthurPhoto} alt="" aria-hidden="true" />
             <header className="hero__name">
               <small>PORTFÓLIO</small>
               <h1>Arthur Pimentel</h1>
