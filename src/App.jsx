@@ -85,6 +85,9 @@ function App() {
 
       hero.style.setProperty('--hero-scroll-offset', `${scrollOffset}px`)
       hero.style.setProperty('--birds-scroll-offset', `${scrollOffset * 1.8}px`)
+      hero.style.setProperty('--fireflies-back-scroll-offset', `${scrollOffset * 1.55}px`)
+      hero.style.setProperty('--fireflies-middle-scroll-offset', `${scrollOffset * 1.15}px`)
+      hero.style.setProperty('--fireflies-front-scroll-offset', `${scrollOffset * 0.75}px`)
       hero.style.setProperty('--hero-content-opacity', contentOpacity)
       hero.toggleAttribute('data-content-hidden', contentOpacity === 0)
       if (about) about.style.marginTop = `${-stackOffsets[2]}px`

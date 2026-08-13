@@ -147,18 +147,18 @@ a { color: inherit; }
   pointer-events: none;
   visibility: hidden;
   opacity: 0;
-  transform: translate3d(0, clamp(12rem, 35vh, 24rem), 0);
+  transform: translate3d(0, calc(clamp(12rem, 35vh, 24rem) + var(--fireflies-scroll-offset, 0px)), 0);
   transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1), transform 900ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 900ms;
 }
 .hero[data-theme="dark"] .hero__fireflies {
   visibility: visible;
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, var(--fireflies-scroll-offset, 0px), 0);
   transition-delay: 0s;
 }
-.hero__fireflies--between-back { z-index: 3; }
-.hero__fireflies--between-front { z-index: 5; }
-.hero__fireflies--foreground { z-index: 6; }
+.hero__fireflies--between-back { z-index: 3; --fireflies-scroll-offset: var(--fireflies-back-scroll-offset, 0px); }
+.hero__fireflies--between-front { z-index: 5; --fireflies-scroll-offset: var(--fireflies-middle-scroll-offset, 0px); }
+.hero__fireflies--foreground { z-index: 6; --fireflies-scroll-offset: var(--fireflies-front-scroll-offset, 0px); }
 .hero__firefly {
   position: absolute;
   top: var(--firefly-y);
