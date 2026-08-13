@@ -48,6 +48,13 @@ const projects = [
   { name: 'Projeto D', stack: 'Produto · Comunidade', device: 'phone', image: null, imageAlt: 'Tela do Projeto D' },
 ]
 
+const contactChannels = [
+  { label: 'LinkedIn', href: null },
+  { label: 'GitHub', href: 'https://github.com/Covil-Works' },
+  { label: 'E-mail', href: null },
+  { label: 'WhatsApp', href: null },
+]
+
 function App() {
   const [heroTheme, setHeroTheme] = useState('light')
   const heroRef = useRef(null)
@@ -212,27 +219,19 @@ function App() {
       </section>
 
       <section className="about content" id="sobre">
-        <div>
+        <div className="about__intro">
           <h2>Sobre</h2>
           <p className="lead">Sou Arthur Pimentel. Desenvolvo experiências digitais e produtos que aproximam tecnologia, clareza e propósito.</p>
           <a className="contact-link" href="#contato">Vamos conversar ↗</a>
         </div>
 
-        <aside>
-          <h3>Download do Currículo</h3>
+        <aside className="resume">
+          <h3>Currículo</h3>
           <p>Conheça minha experiência, formação e trajetória profissional.</p>
           <a className="download-button" href="/curriculo-arthur-pimentel.pdf" download>
             <span>Baixar currículo</span><span aria-hidden="true">↓</span>
           </a>
-
-          <h3 id="contato">Contato</h3>
-          <p>Disponível para novos projetos e boas conversas.</p>
         </aside>
-      </section>
-
-      <section className="technologies content" id="tecnologias">
-        <div className="section-title"><small>FERRAMENTAS E PLATAFORMAS</small><h2>Tecnologias</h2></div>
-        <ul><li>React</li><li>Next.js</li><li>Kotlin</li><li>PostgreSQL</li></ul>
       </section>
 
       <section className="projects content" id="projetos">
@@ -240,6 +239,37 @@ function App() {
         <div className="project-grid">
           {projects.map((project, index) => <ProjectCard key={project.name} project={project} index={index} />)}
         </div>
+
+        <div className="technologies" id="tecnologias">
+          <div className="technologies__heading">
+            <small>FERRAMENTAS E PLATAFORMAS</small>
+            <h3>Tecnologias</h3>
+          </div>
+          <ul><li>React</li><li>Next.js</li><li>Kotlin</li><li>PostgreSQL</li></ul>
+        </div>
+      </section>
+
+      <section className="contact content" id="contato">
+        <div className="section-title">
+          <small>DISPONÍVEL PARA NOVOS PROJETOS</small>
+          <h2>Contato</h2>
+        </div>
+        <p className="contact__intro">Escolha o canal que preferir para conversarmos.</p>
+        <ul className="contact__channels">
+          {contactChannels.map((channel) => (
+            <li key={channel.label}>
+              {channel.href ? (
+                <a href={channel.href} target="_blank" rel="noreferrer">
+                  <span>{channel.label}</span><span aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                <span className="contact__channel-pending">
+                  <span>{channel.label}</span><span>Link a definir</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   )
