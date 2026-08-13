@@ -198,33 +198,21 @@ function App() {
   useEffect(() => {
     const experienceSection = experienceRef.current
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (!experienceSection || reducedMotionQuery.matches) return undefined
+    if (!experienceSection) return undefined
 
     const items = Array.from(experienceSection.querySelectorAll('.experience__timeline > li'))
-    const mobileQuery = window.matchMedia('(max-width: 760px)')
     let frameId = null
-    let lastScrollY = window.scrollY
 
-    const updateExperienceNudges = () => {
+    const updateExperienceScroll = () => {
       frameId = null
-      const currentScrollY = window.scrollY
-      const isScrollingDown = currentScrollY >= lastScrollY
-      lastScrollY = currentScrollY
-      if (!isScrollingDown) return
-
-      if (mobileQuery.matches) {
-        const triggerLine = window.innerHeight * 0.82
-        items.forEach((item) => {
-          const itemRect = item.getBoundingClientRect()
-          if (itemRect.top <= triggerLine && itemRect.bottom >= 0) item.classList.add('is-nudging')
-        })
+      if (reducedMotionQuery.matches) {
+        items.forEach((item) => item.style.removeProperty('--experience-scroll-shift'))
         return
       }
 
       const sectionRect = experienceSection.getBoundingClientRect()
-      const progressStart = window.innerHeight * 0.82
-      const progressEnd = window.innerHeight * 0.42
-      if (sectionRect.top > progressStart || sectionRect.bottom < 0) return
+      const progressStart = window.innerHeight * 0.88
+      const progressEnd = window.innerHeight * -0.12
 
       const progress = Math.min(Math.max(
         (progressStart - sectionRect.top) / (progressStart - progressEnd),
@@ -232,25 +220,29 @@ function App() {
       ), 1)
 
       items.forEach((item, index) => {
-        const itemThreshold = items.length > 1 ? index / (items.length - 1) : 0
-        if (progress >= itemThreshold) item.classList.add('is-nudging')
+        const itemProgress = (progress * items.length) - index
+        const itemPulse = itemProgress > 0 && itemProgress < 1
+          ? 1 - Math.abs((itemProgress * 2) - 1)
+          : 0
+        item.style.setProperty('--experience-scroll-shift', `${(itemPulse * 0.55).toFixed(3)}rem`)
       })
     }
 
-    const requestNudgeUpdate = () => {
-      if (frameId === null) frameId = window.requestAnimationFrame(updateExperienceNudges)
+    const requestExperienceUpdate = () => {
+      if (frameId === null) frameId = window.requestAnimationFrame(updateExperienceScroll)
     }
 
-    updateExperienceNudges()
-    window.addEventListener('scroll', requestNudgeUpdate, { passive: true })
-    window.addEventListener('resize', requestNudgeUpdate)
-    mobileQuery.addEventListener('change', requestNudgeUpdate)
+    updateExperienceScroll()
+    window.addEventListener('scroll', requestExperienceUpdate, { passive: true })
+    window.addEventListener('resize', requestExperienceUpdate)
+    reducedMotionQuery.addEventListener('change', requestExperienceUpdate)
 
     return () => {
       if (frameId !== null) window.cancelAnimationFrame(frameId)
-      window.removeEventListener('scroll', requestNudgeUpdate)
-      window.removeEventListener('resize', requestNudgeUpdate)
-      mobileQuery.removeEventListener('change', requestNudgeUpdate)
+      window.removeEventListener('scroll', requestExperienceUpdate)
+      window.removeEventListener('resize', requestExperienceUpdate)
+      reducedMotionQuery.removeEventListener('change', requestExperienceUpdate)
+      items.forEach((item) => item.style.removeProperty('--experience-scroll-shift'))
     }
   }, [])
 
