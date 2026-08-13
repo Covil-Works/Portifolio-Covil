@@ -283,9 +283,9 @@ h1 {
   text-wrap: balance;
 }
 nav { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; }
-nav a { font-size: clamp(1.55rem, 3vw, 2.8rem); font-weight: 700; line-height: 1.15; text-decoration: none; }
-nav a::before { content: "—"; display: inline-block; margin-right: 0.65rem; transition: transform 180ms ease-out; }
-nav a:hover::before, nav a:focus-visible::before { transform: translateX(0.35rem); }
+nav a { display: inline-block; font-size: clamp(1.55rem, 3vw, 2.8rem); font-weight: 700; line-height: 1.15; text-decoration: none; transition: transform 180ms ease-out; }
+nav a::before { content: "—"; display: inline-block; margin-right: 0.65rem; }
+nav a:hover, nav a:focus-visible { transform: translateX(0.35rem); }
 a:focus-visible { outline: 3px solid var(--honey); outline-offset: 5px; }
 
 .about { padding: clamp(5rem, 10vw, 9rem) 0 40px; }
