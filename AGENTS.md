@@ -3,6 +3,14 @@
 - Faça commits com Git semântico (Conventional Commits) e nunca adicione coautor.
 - Não execute build nem rode a aplicação, salvo quando o usuário pedir explicitamente.
 - Use UTF-8 em todos os arquivos e preserve acentos em português.
+- Preserve correções de interface e decisões visuais já consolidadas. Antes de alterar estilos, leia este arquivo e trate as proteções registradas como requisitos de não regressão; não remova, simplifique nem sobrescreva essas soluções sem pedido explícito do usuário.
+- Sempre que uma correção resolver um bug visual recorrente ou estabelecer uma decisão de interface que deva sobreviver a futuras alterações, registre-a neste `AGENTS.md`, incluindo o problema evitado e a restrição que deve ser preservada.
+
+## Correções visuais protegidas
+
+- No desktop (`min-width: 761px`), todas as `.hero__stack` devem ultrapassar 5px cada lateral da viewport, com `left: -5px` e `right: -5px`. Essa sangria elimina a borda residual que pode aparecer no lado esquerdo, especialmente no recorte inferior da stack 3. A regra deve permanecer comum aos SVGs `light` e `dark`; não crie comportamentos laterais diferentes por tema.
+- No tema claro, o rótulo `PORTFÓLIO` do hero deve usar exatamente a cor do fundo escuro, centralizada na variável `--hero-bg-dark`. No tema escuro, preserve a cor clara já definida para os textos pequenos do hero.
+- O espaço vertical entre as seções `Sobre`, `Tecnologias` e `Projetos` não pode ultrapassar 40px. A composição atual divide esse intervalo em 20px no final de uma seção e 20px no início da seguinte; preserve esse limite ao alterar paddings ou margens dessas seções.
 
 ## Contrato visual do hero em camadas
 
