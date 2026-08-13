@@ -16,7 +16,6 @@ const DESKTOP_STACK_START = 300
 const DESKTOP_STACK_GAP = 30
 const DESKTOP_STACK_3_TOP = DESKTOP_STACK_START + DESKTOP_STACK_GAP * 2
 const HERO_CONTENT_OFFSET_Y = -100
-const MOBILE_HERO_NAME_OFFSET_Y = -110
 const MOBILE_HERO_PHOTO_OFFSET_Y = -140
 const MOBILE_HERO_MENU_OFFSET_Y = -150
 const HERO_CONTENT_FADE = {
@@ -123,7 +122,6 @@ function App() {
         style={{
           '--stack-3-top-desktop': `${DESKTOP_STACK_3_TOP}px`,
           '--hero-content-offset-y': `${HERO_CONTENT_OFFSET_Y}px`,
-          '--mobile-hero-name-offset-y': `${MOBILE_HERO_NAME_OFFSET_Y}px`,
           '--mobile-hero-photo-offset-y': `${MOBILE_HERO_PHOTO_OFFSET_Y}px`,
           '--mobile-hero-menu-offset-y': `${MOBILE_HERO_MENU_OFFSET_Y}px`,
         }}
