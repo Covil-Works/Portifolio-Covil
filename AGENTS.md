@@ -11,6 +11,7 @@
 - No desktop (`min-width: 761px`), todas as `.hero__stack` devem ultrapassar 5px cada lateral da viewport, com `left: -5px` e `right: -5px`. Essa sangria elimina a borda residual que pode aparecer no lado esquerdo, especialmente no recorte inferior da stack 3. A regra deve permanecer comum aos SVGs `light` e `dark`; não crie comportamentos laterais diferentes por tema.
 - No tema claro, o rótulo `PORTFÓLIO` do hero deve usar exatamente a cor do fundo escuro, centralizada na variável `--hero-bg-dark`. No tema escuro, preserve a cor clara já definida para os textos pequenos do hero.
 - O espaço vertical entre as seções `Sobre`, `Tecnologias` e `Projetos` não pode ultrapassar 40px. A composição atual divide esse intervalo em 20px no final de uma seção e 20px no início da seguinte; preserve esse limite ao alterar paddings ou margens dessas seções.
+- Os seis vagalumes do hero aparecem somente no tema escuro. Três devem permanecer nas laterais da região inferior, visualmente à frente da stack 3 sem ultrapassar o botão de tema; os outros três permanecem distribuídos entre as camadas. Preserve os núcleos brancos de 5px nos três vagalumes à frente da stack 3 e a variação de 1px, 2px e 4px nos três vagalumes entre as camadas, além do brilho verde difuso, dos percursos limitados por elemento, das piscadas suaves e da alternativa estática de `prefers-reduced-motion`.
 
 ## Contrato visual do hero em camadas
 
