@@ -50,6 +50,53 @@ a { color: inherit; }
 .hero__background-image--dark { opacity: 0; }
 .hero[data-theme="dark"] .hero__background-image--light { opacity: 0; }
 .hero[data-theme="dark"] .hero__background-image--dark { opacity: 1; }
+.hero__birds {
+  position: absolute;
+  top: clamp(3.5rem, 9vw, 7rem);
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: clamp(5rem, 12vw, 9rem);
+  pointer-events: none;
+  opacity: 1;
+  transform: translate3d(0, var(--birds-scroll-offset, 0px), 0);
+  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1), transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero[data-theme="dark"] .hero__birds {
+  opacity: 0;
+  transform: translate3d(0, calc(var(--birds-scroll-offset, 0px) + clamp(12rem, 35vh, 24rem)), 0);
+}
+.hero__bird {
+  position: absolute;
+  left: -1rem;
+  display: block;
+  aspect-ratio: 1;
+  object-fit: contain;
+  animation-name: bird-crossing;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.hero__bird--1 {
+  top: 14%;
+  width: 12px;
+  animation-duration: 30s;
+  animation-delay: -9s;
+}
+.hero__bird--2 {
+  top: 52%;
+  width: 15px;
+  animation-duration: 22.8s;
+  animation-delay: -2s;
+}
+.hero__bird--3 {
+  top: 30%;
+  width: 18px;
+  animation-duration: 16.8s;
+  animation-delay: -7s;
+}
+@keyframes bird-crossing {
+  to { transform: translate3d(calc(100vw + 2rem), 0, 0); }
+}
 .hero__stack {
   position: absolute;
   top: var(--stack-top-desktop);
@@ -276,6 +323,7 @@ aside p { margin: 0; color: var(--muted); line-height: 1.5; }
   .hero__menu-layer nav { grid-column: 1; }
   .about, .project-grid { grid-template-columns: 1fr; }
   .about { gap: 3.5rem; }
+  .hero__birds { top: 10%; }
 }
 @media (max-width: 460px) {
   .hero { --hero-photo-size: 4.8rem; }
@@ -283,6 +331,10 @@ aside p { margin: 0; color: var(--muted); line-height: 1.5; }
   h1 { font-size: clamp(2.5rem, 14vw, 4rem); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .hero__bird { animation: none; }
+  .hero__bird--1 { left: 20%; }
+  .hero__bird--2 { left: 48%; }
+  .hero__bird--3 { left: 76%; }
   .hero__stack,
   .hero__layer { will-change: auto; }
   html { scroll-behavior: auto; }

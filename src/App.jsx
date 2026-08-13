@@ -9,6 +9,9 @@ import stack2Dark from '../img/stack2-dark.svg'
 import stack3Light from '../img/stack3-light.svg'
 import stack3Dark from '../img/stack3-dark.svg'
 import arthurPhoto from '../img/arthur.png'
+import bird1 from '../img/b1.png'
+import bird2 from '../img/b2.png'
+import bird3 from '../img/b3.png'
 
 const MOBILE_STACK_START = 20
 const MOBILE_STACK_GAP = 10
@@ -81,6 +84,7 @@ function App() {
         : speeds.map((speed) => introScroll * speed)
 
       hero.style.setProperty('--hero-scroll-offset', `${scrollOffset}px`)
+      hero.style.setProperty('--birds-scroll-offset', `${scrollOffset * 1.8}px`)
       hero.style.setProperty('--hero-content-opacity', contentOpacity)
       hero.toggleAttribute('data-content-hidden', contentOpacity === 0)
       if (about) about.style.marginTop = `${-stackOffsets[2]}px`
@@ -129,6 +133,12 @@ function App() {
         <div className="hero__background" aria-hidden="true">
           <img className="hero__background-image hero__background-image--light" src={bgLight} alt="" />
           <img className="hero__background-image hero__background-image--dark" src={bgDark} alt="" />
+        </div>
+
+        <div className="hero__birds" aria-hidden="true">
+          <img className="hero__bird hero__bird--1" src={bird1} alt="" />
+          <img className="hero__bird hero__bird--2" src={bird2} alt="" />
+          <img className="hero__bird hero__bird--3" src={bird3} alt="" />
         </div>
 
         {heroStacks.map((stack, index) => (
