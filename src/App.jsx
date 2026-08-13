@@ -77,12 +77,11 @@ function App() {
       ), 1)
       const contentOpacity = 1 - fadeProgress
       const introScroll = Math.min(scrollOffset, DESKTOP_PARALLAX_DISTANCE)
-      const contentScrollOffset = mobileQuery.matches ? scrollOffset : introScroll
       const stackOffsets = mobileQuery.matches
         ? speeds.map((speed) => scrollOffset * speed)
         : speeds.map((speed) => introScroll * speed)
 
-      hero.style.setProperty('--hero-scroll-offset', `${contentScrollOffset}px`)
+      hero.style.setProperty('--hero-scroll-offset', `${scrollOffset}px`)
       hero.style.setProperty('--hero-content-opacity', contentOpacity)
       hero.toggleAttribute('data-content-hidden', contentOpacity === 0)
       if (about) about.style.marginTop = `${-stackOffsets[2]}px`
