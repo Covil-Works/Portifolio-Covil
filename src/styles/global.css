@@ -404,8 +404,10 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
 .experience__detail-content { animation: experience-detail-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 .experience__detail-content h3 { margin: 0.5rem 0 1.25rem; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: -0.04em; }
 .experience__detail-content p { max-width: 58ch; margin: 0; color: var(--muted); line-height: 1.65; text-wrap: pretty; }
-.experience__detail-content ul { display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
-.experience__detail-content li { padding: 0.55rem 0.85rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.82rem; font-weight: 700; }
+.experience__detail-content p + p { margin-top: 0.95rem; }
+.experience__detail-cta { display: inline-flex; margin-top: 1.2rem; color: var(--ink); font-size: 0.95rem; font-weight: 800; text-decoration: underline; text-decoration-thickness: 0.08em; text-underline-offset: 0.28em; transition: transform 180ms ease-out, color 180ms ease-out; }
+.experience__detail-cta:hover, .experience__detail-cta:focus-visible { color: var(--experience-active); transform: translateX(0.25rem); }
+.experience__detail-cta:focus-visible { outline: 3px solid var(--honey); outline-offset: 4px; }
 .experience__empty { place-self: center; max-width: 24ch; margin: 0; color: var(--muted); font-size: clamp(1.1rem, 1.7vw, 1.35rem); line-height: 1.45; text-align: center; }
 .experience__mobile-details { display: none; }
 .experience__detail-close { display: none; }
@@ -529,7 +531,6 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   .experience__mobile-details .experience__detail-content { position: relative; padding: 1.25rem 2.75rem 1.5rem 1.75rem; animation: none; }
   .experience__detail-close { position: absolute; top: 1.1rem; right: 0; display: grid; width: 2rem; aspect-ratio: 1; padding: 0; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: transparent; font: inherit; font-size: 1.35rem; cursor: pointer; }
   .experience__detail-content h3 { font-size: clamp(2rem, 10vw, 3.25rem); }
-  .experience__detail-content ul { align-items: flex-start; flex-direction: column; }
   .resume { padding-top: 0; }
   .about__stack { align-items: center; flex-direction: row; flex-wrap: wrap; gap: 0.75rem 1rem; }
   .contact__channels li:nth-child(n) { padding-inline: 0; }

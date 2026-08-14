@@ -3,6 +3,7 @@ import { FaLinkedin } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import {
   SiGithub,
+  SiGooglescholar,
   SiKotlin,
   SiNextdotjs,
   SiOpenjdk,
@@ -57,31 +58,45 @@ const heroStacks = [
 const experiences = [
   {
     name: 'UFPA',
-    context: 'Formação acadêmica',
-    summary: 'Formação e início em desenvolvimento',
-    description: 'Minha trajetória em programação começou junto com a graduação, onde construí a base que orienta meu trabalho em desenvolvimento e tecnologia.',
-    highlights: ['Fundamentos de computação', 'Primeiros projetos de software'],
+    context: 'Ciência da Computação · 2022 - Atual',
+    summary: 'Base acadêmica em computação',
+    description: [
+      'Entrei na UFPA em 2022 para cursar Ciência da Computação e estou concluindo a graduação no fim de 2026.',
+      'No curso, construí a base que sustenta meu trabalho como desenvolvedor: programação, estruturas de software, bancos de dados, sistemas operacionais, sistemas distribuídos e redes de computadores.',
+    ],
   },
   {
     name: 'GERCOM',
-    context: 'Laboratório de pesquisa',
-    summary: 'Pesquisa e desenvolvimento',
-    description: 'Atuação com desenvolvimento de software e pesquisa, conectando construção técnica, investigação e produção acadêmica.',
-    highlights: ['Programas e ferramentas', 'Artigos e publicações', 'Projetos de pesquisa e desenvolvimento'],
+    context: 'Laboratório de redes · 2022 - Atual',
+    summary: 'Pesquisa, software e infraestrutura',
+    description: [
+      'Nesse laboratório da UFPA, especializado em redes, fiz pesquisa e desenvolvimento em computação quântica e publiquei artigos relevantes.',
+      'Além de desenvolver softwares, trabalhei com Python, Docker, infraestrutura, redes, criação e manutenção de sites e PHP.',
+      'Também apoiei a organização de eventos, apresentei trabalhos, ministrei aulas, acompanhei e orientei iniciantes e voluntários do grupo.',
+      'O meu perfil do Google Scholar reúne as publicações mais recentes.',
+    ],
+    cta: { label: 'Ver publicações no contato', href: '#contato' },
   },
   {
     name: 'DIAVI',
-    context: 'Estágio · UFPA',
-    summary: 'Desenvolvimento Full Stack · Dados',
-    description: 'Desenvolvimento full stack de um portal que transforma dados institucionais, do Enade e de outras bases universitárias em informação para apoiar decisões de diretorias e setores da Reitoria.',
-    highlights: ['Dashboards e visualizações', 'Análises de dados institucionais', 'Portal de apoio à decisão'],
+    context: 'Estágio · Reitoria da UFPA · 2026 - Atual',
+    summary: 'Portal institucional de dados',
+    description: [
+      'Atuo na Diretoria de Avaliação Institucional da Reitoria da UFPA, mantendo e evoluindo um portal de análise de dados institucionais.',
+      'Transformei fluxos baseados em planilhas em um sistema com banco de dados, autenticação, segurança de login e perfis de acesso por tipo de usuário.',
+      'Otimizei consultas de cerca de 1 minuto para aproximadamente 5 segundos ao modelar o PostgreSQL e pré-calcular dados, reduzindo o portal de centenas para dezenas de megabytes.',
+      'O projeto usa Next.js, PostgreSQL, serverless e Firebase; também presto suporte de TI quando necessário.',
+    ],
   },
   {
     name: 'Covil',
-    context: 'Grupo cofundado',
-    summary: 'Software · Comunidade · Educação',
-    description: 'Grupo que ajudei a fundar para desenvolver softwares e projetos, compartilhar conhecimento e promover atividades ligadas à tecnologia.',
-    highlights: ['Desenvolvimento de software', 'Compartilhamento de conhecimento', 'Aulas e atividades'],
+    context: 'Empresa cofundada · 2026 - Atual',
+    summary: 'Produtos, clientes e comunidade',
+    description: [
+      'Cofundei a Covil em 2026 convidando amigos para criar soluções de software, prospectar clientes e desenvolver produtos próprios e para terceiros.',
+      'Trabalhamos com aplicativos Android em Kotlin, sistemas web em React e Next.js, backends em Java com Spring Boot e bancos relacionais com PostgreSQL.',
+      'Além dos projetos comerciais, criamos soluções open source e damos aulas sobre desenvolvimento, contribuindo com a comunidade dev enquanto a empresa segue ativa.',
+    ],
   },
 ]
 
@@ -103,10 +118,11 @@ const projects = [
 ]
 
 const contactChannels = [
-  { label: 'LinkedIn', href: null, icon: FaLinkedin },
-  { label: 'GitHub', href: 'https://github.com/Covil-Works', icon: SiGithub },
-  { label: 'E-mail', href: null, icon: MdEmail },
-  { label: 'WhatsApp', href: null, icon: SiWhatsapp },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/artuenric', icon: FaLinkedin },
+  { label: 'GitHub', href: 'https://github.com/artuenric', icon: SiGithub },
+  { label: 'Google Scholar', href: 'https://scholar.google.com/citations?hl=en&user=Wm2qsHQAAAAJ&view_op=list_works&sortby=pubdate', icon: SiGooglescholar },
+  { label: 'E-mail', href: 'mailto:artuenrick.dev@gmail.com', icon: MdEmail },
+  { label: 'WhatsApp', href: 'https://wa.me/5591986402937', icon: SiWhatsapp },
 ]
 
 function ExperienceDetails({ experience, onClose }) {
@@ -117,10 +133,8 @@ function ExperienceDetails({ experience, onClose }) {
       )}
       <small>{experience.context}</small>
       <h3>{experience.name}</h3>
-      <p>{experience.description}</p>
-      <ul>
-        {experience.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
-      </ul>
+      {experience.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      {experience.cta && <a className="experience__detail-cta" href={experience.cta.href}>{experience.cta.label}</a>}
     </div>
   )
 }
