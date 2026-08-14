@@ -97,6 +97,7 @@ const experiences = [
       'Trabalhamos com aplicativos Android em Kotlin, sistemas web em React e Next.js, backends em Java com Spring Boot e bancos relacionais com PostgreSQL.',
       'Além dos projetos comerciais, criamos soluções open source e damos aulas sobre desenvolvimento, contribuindo com a comunidade dev enquanto a empresa segue ativa.',
     ],
+    cta: { label: 'Conhecer a Covil', href: 'https://covildev.com', external: true },
   },
 ]
 
@@ -134,7 +135,7 @@ function ExperienceDetails({ experience, onClose }) {
       <small>{experience.context}</small>
       <h3>{experience.name}</h3>
       {experience.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-      {experience.cta && <a className="experience__detail-cta" href={experience.cta.href}>{experience.cta.label}</a>}
+      {experience.cta && <a className="experience__detail-cta" href={experience.cta.href} target={experience.cta.external ? '_blank' : undefined} rel={experience.cta.external ? 'noreferrer' : undefined}>{experience.cta.label}</a>}
     </div>
   )
 }
