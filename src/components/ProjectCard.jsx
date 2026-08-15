@@ -5,8 +5,12 @@ const PHONE_ROTATION_ORDER = ['main', 'left', 'right']
 function ProjectCard({ project, index }) {
   const [phoneRotationStep, setPhoneRotationStep] = useState(0)
   const [isPhoneCycling, setIsPhoneCycling] = useState(false)
+  const [desktopCarouselStep, setDesktopCarouselStep] = useState(0)
   const phoneRotationTimer = useRef(null)
+  const desktopCarouselTimer = useRef(null)
   const canRotatePhonePreview = project.device === 'phone' && project.rotatePhonePreview
+  const canRotateDesktopPreview = project.device === 'desktop' && project.carouselImages?.length > 1
+  const canAutoPreview = canRotatePhonePreview || canRotateDesktopPreview
 
   const stopPhoneRotation = () => {
     if (phoneRotationTimer.current) {
@@ -18,15 +22,43 @@ function ProjectCard({ project, index }) {
     setPhoneRotationStep(0)
   }
 
-  useEffect(() => stopPhoneRotation, [])
+  const stopDesktopCarousel = () => {
+    if (desktopCarouselTimer.current) {
+      clearInterval(desktopCarouselTimer.current)
+      desktopCarouselTimer.current = null
+    }
+
+    setDesktopCarouselStep(0)
+  }
+
+  useEffect(() => () => {
+    stopPhoneRotation()
+    stopDesktopCarousel()
+  }, [])
 
   const startPhoneRotation = () => {
     if (!canRotatePhonePreview || phoneRotationTimer.current) return
 
+    setIsPhoneCycling(true)
+    setPhoneRotationStep(1)
     phoneRotationTimer.current = setInterval(() => {
-      setIsPhoneCycling(true)
       setPhoneRotationStep((currentStep) => (currentStep + 1) % PHONE_ROTATION_ORDER.length)
-    }, 2000)
+    }, 1500)
+  }
+
+  const startDesktopCarousel = () => {
+    if (!canRotateDesktopPreview || desktopCarouselTimer.current) return
+
+    setDesktopCarouselStep(1)
+    desktopCarouselTimer.current = setInterval(() => {
+      setDesktopCarouselStep((currentStep) => (currentStep + 1) % project.carouselImages.length)
+    }, 1500)
+  }
+
+  const startAutoPreview = canRotatePhonePreview ? startPhoneRotation : startDesktopCarousel
+  const stopAutoPreview = () => {
+    stopPhoneRotation()
+    stopDesktopCarousel()
   }
 
   const getRotatingPhonePosition = (initialPosition) => {
@@ -59,9 +91,9 @@ function ProjectCard({ project, index }) {
       <div className="project-card__meta"><span>0{index + 1}</span><span>Ver projeto ↗</span></div>
       <h3>{project.name}</h3>
       <div
-        className={'project-card__visual visual--' + project.device + (project.name === 'SplitUp' ? ' project-card__visual--splitup' : '')}
-        onMouseEnter={canRotatePhonePreview ? startPhoneRotation : undefined}
-        onMouseLeave={canRotatePhonePreview ? stopPhoneRotation : undefined}
+        className={'project-card__visual visual--' + project.device + (project.name === 'SplitUp' ? ' project-card__visual--splitup' : '') + (project.name === 'MyWL' ? ' project-card__visual--mywl' : '')}
+        onMouseEnter={canAutoPreview ? startAutoPreview : undefined}
+        onMouseLeave={canAutoPreview ? stopAutoPreview : undefined}
       >
         {project.device === 'phone' ? (
           <div className={[
@@ -83,7 +115,7 @@ function ProjectCard({ project, index }) {
           <div className="device-mockup">
             {project.carouselImages ? (
               <div className="desktop-preview__screen" aria-label={`${project.name} - telas do projeto`}>
-                <div className="desktop-preview__track">
+                <div className="desktop-preview__track" style={{ transform: `translateX(-${desktopCarouselStep * 33.333333}%)` }}>
                   {project.carouselImages.map((image, imageIndex) => (
                     <img
                       key={image}

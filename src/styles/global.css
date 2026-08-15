@@ -13,6 +13,7 @@
   --experience-active: oklch(0.75 0.2 145);
   --line: oklch(0.78 0.025 72);
   --project-surface: oklch(0.93 0.015 75);
+  --project-frame: #000;
 }
 * { box-sizing: border-box; }
 html { min-width: 320px; overflow-x: clip; scroll-behavior: smooth; }
@@ -29,6 +30,7 @@ main[data-theme="dark"] {
   --paper: #000;
   --line: oklch(0.34 0.012 145);
   --project-surface: oklch(0.23 0.014 145);
+  --project-frame: #fff;
 }
 a { color: inherit; }
 .content { width: min(calc(100% - 2.5rem), 1200px); margin-inline: auto; }
@@ -437,9 +439,10 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
 .project-card__meta { display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
 .project-card__visual {
   position: relative; display: grid; width: 100%; aspect-ratio: 5 / 4; place-items: end center;
-  overflow: hidden; border-radius: 14px; background: var(--project-surface); transition: background-color 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden; border-radius: 14px; background: var(--project-surface); outline: 2px solid var(--project-frame); outline-offset: 2px; transition: background-color 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .project-card__visual--splitup { background: #8f7cfb; }
+.project-card__visual--mywl { background: #faa0bd; }
 .device-mockup {
   position: relative;
   background: oklch(0.18 0.01 72);
@@ -547,7 +550,7 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   display: flex;
   width: 300%;
   height: 100%;
-  animation: mywl-slide 9s infinite cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .desktop-preview__image {
   flex: 0 0 33.333333%;
