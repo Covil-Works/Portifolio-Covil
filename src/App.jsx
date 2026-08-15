@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FaLinkedin } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import {
+  SiDocker,
   SiGithub,
   SiGooglescholar,
   SiKotlin,
@@ -108,6 +109,7 @@ const experiences = [
 ]
 
 const technologies = [
+  { name: 'Docker', icon: SiDocker },
   { name: 'React', icon: SiReact },
   { name: 'Next.js', icon: SiNextdotjs },
   { name: 'Kotlin', icon: SiKotlin },
