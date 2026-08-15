@@ -1,14 +1,36 @@
 function ProjectCard({ project, index }) {
+  const renderScreen = (image = project.image, imageAlt = project.imageAlt, isDecorative = false) => (
+    <div className="device-mockup__screen">
+      {image ? (
+        <img src={image} alt={isDecorative ? '' : imageAlt} aria-hidden={isDecorative || undefined} />
+      ) : (
+        <span>{isDecorative ? '' : 'Imagem do projeto'}</span>
+      )}
+    </div>
+  )
+
   return (
     <article className="project-card">
       <div className="project-card__meta"><span>0{index + 1}</span><span>Ver projeto ↗</span></div>
       <h3>{project.name}</h3>
       <div className={'project-card__visual visual--' + project.device}>
-        <div className="device-mockup">
-          <div className="device-mockup__screen">
-            {project.image ? <img src={project.image} alt={project.imageAlt} /> : <span>Imagem do projeto</span>}
+        {project.device === 'phone' ? (
+          <div className="phone-preview">
+            <div className="device-mockup device-mockup--rear device-mockup--left" aria-hidden="true">
+              {renderScreen(project.phoneImages?.left, '', true)}
+            </div>
+            <div className="device-mockup device-mockup--rear device-mockup--right" aria-hidden="true">
+              {renderScreen(project.phoneImages?.right, '', true)}
+            </div>
+            <div className="device-mockup device-mockup--main">
+              {renderScreen()}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="device-mockup">
+            {renderScreen()}
+          </div>
+        )}
       </div>
       <p>{project.stack}</p>
     </article>

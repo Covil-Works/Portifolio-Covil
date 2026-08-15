@@ -26,6 +26,9 @@ import arthurPhoto from '../img/arthur.png'
 import bird1 from '../img/b1.png'
 import bird2 from '../img/b2.png'
 import bird3 from '../img/b3.png'
+import suMain from '../img/su-main.jpg'
+import suAmigos from '../img/su-amigos.jpg'
+import suComanda from '../img/su-coomanda.jpg'
 
 const MOBILE_STACK_START = 20
 const MOBILE_STACK_GAP = 10
@@ -112,7 +115,7 @@ const technologies = [
 ]
 
 const projects = [
-  { name: 'Projeto A', stack: 'Kotlin · PostgreSQL', device: 'phone', image: null, imageAlt: 'Tela do Projeto A' },
+  { name: 'SplitUp', stack: 'Kotlin · PostgreSQL', device: 'phone', image: suMain, imageAlt: 'Tela principal do SplitUp', phoneImages: { left: suComanda, right: suAmigos } },
   { name: 'Projeto B', stack: 'Next.js · PostgreSQL', device: 'desktop', image: null, imageAlt: 'Tela do Projeto B' },
   { name: 'Projeto C', stack: 'Java · Spring', device: 'desktop', image: null, imageAlt: 'Tela do Projeto C' },
   { name: 'Projeto D', stack: 'Produto · Comunidade', device: 'phone', image: null, imageAlt: 'Tela do Projeto D' },

@@ -28,7 +28,7 @@ main[data-theme="dark"] {
   --muted: oklch(0.78 0.015 80);
   --paper: #000;
   --line: oklch(0.34 0.012 145);
-  --project-surface: oklch(0.14 0.012 145);
+  --project-surface: oklch(0.23 0.014 145);
 }
 a { color: inherit; }
 .content { width: min(calc(100% - 2.5rem), 1200px); margin-inline: auto; }
@@ -439,15 +439,68 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   position: relative; display: grid; width: 100%; aspect-ratio: 5 / 4; place-items: end center;
   overflow: hidden; border-radius: 14px; background: var(--project-surface); transition: background-color 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.device-mockup { position: relative; background: oklch(0.18 0.01 72); }
+.device-mockup {
+  position: relative;
+  background: oklch(0.18 0.01 72);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
 .device-mockup__screen { overflow: hidden; background: oklch(0.88 0.01 72); }
 .device-mockup__screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .device-mockup__screen span {
   display: grid; width: 100%; height: 100%; place-items: center; padding: 1rem;
   color: oklch(0.42 0.015 72); font-size: 0.8rem; font-weight: 700; text-align: center;
 }
+.phone-preview {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: end center;
+}
 .visual--phone .device-mockup {
-  width: min(62.4%, 16.9rem); height: auto; aspect-ratio: 2 / 3; padding: 0.6rem 0.6rem 0; border-radius: 2rem 2rem 0 0;
+  --phone-x: 0rem;
+  --phone-y: 0rem;
+  --phone-rotate: 0deg;
+  --phone-scale: 1;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: min(62.4%, 16.9rem);
+  height: auto;
+  aspect-ratio: 2 / 3;
+  padding: 0.6rem 0.6rem 0;
+  border-radius: 2rem 2rem 0 0;
+  transform: translate3d(calc(-50% + var(--phone-x)), var(--phone-y), 0) rotate(var(--phone-rotate)) scale(var(--phone-scale));
+  transform-origin: 50% 100%;
+}
+.visual--phone .device-mockup--main { z-index: 3; }
+.visual--phone .device-mockup--rear {
+  z-index: 2;
+  opacity: 0.78;
+}
+.visual--phone .device-mockup--left {
+  --phone-x: -3.15rem;
+  --phone-rotate: -7deg;
+  --phone-scale: 0.92;
+}
+.visual--phone .device-mockup--right {
+  --phone-x: 3.15rem;
+  --phone-rotate: 7deg;
+  --phone-scale: 0.92;
+}
+.project-card:hover .visual--phone .device-mockup--main,
+.visual--phone:hover .device-mockup--main { --phone-y: -0.55rem; }
+.project-card:hover .visual--phone .device-mockup--left,
+.visual--phone:hover .device-mockup--left {
+  --phone-x: -3.75rem;
+  --phone-y: -0.42rem;
+  --phone-rotate: -9deg;
+}
+.project-card:hover .visual--phone .device-mockup--right,
+.visual--phone:hover .device-mockup--right {
+  --phone-x: 3.75rem;
+  --phone-y: -0.42rem;
+  --phone-rotate: 9deg;
 }
 .visual--phone .device-mockup::before {
   content: ""; position: absolute; top: 0.7rem; left: 50%; z-index: 1;
@@ -459,7 +512,11 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
 .visual--desktop .device-mockup {
   width: min(92%, 34rem); padding: 0.65rem 0.65rem 0;
   border-radius: 0.85rem 0.85rem 0 0;
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: 50% 100%;
 }
+.project-card:hover .visual--desktop .device-mockup,
+.visual--desktop:hover .device-mockup { transform: translate3d(0, -0.45rem, 0) scale(1.012); }
 .visual--desktop .device-mockup::after {
   content: ""; position: absolute; top: 0.25rem; left: 50%;
   width: 0.3rem; aspect-ratio: 1; border-radius: 50%;
@@ -471,8 +528,14 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   h2 { font-size: clamp(3.15rem, 8.1vw, 6.75rem); }
   .visual--phone .device-mockup {
     width: min(56%, 15rem);
-    transform: translateY(0.75rem);
+    --phone-y: 0.75rem;
   }
+  .project-card:hover .visual--phone .device-mockup--main,
+  .visual--phone:hover .device-mockup--main { --phone-y: 0.2rem; }
+  .project-card:hover .visual--phone .device-mockup--left,
+  .visual--phone:hover .device-mockup--left,
+  .project-card:hover .visual--phone .device-mockup--right,
+  .visual--phone:hover .device-mockup--right { --phone-y: 0.33rem; }
 }
 @media (max-width: 760px) {
   .hero__firefly--1,
@@ -542,6 +605,23 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   h1 { font-size: clamp(2.5rem, 14vw, 4rem); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .device-mockup { transition-duration: 0.01ms !important; }
+  .project-card:hover .visual--phone .device-mockup--main,
+  .visual--phone:hover .device-mockup--main { --phone-y: 0rem; }
+  .project-card:hover .visual--phone .device-mockup--left,
+  .visual--phone:hover .device-mockup--left {
+    --phone-x: -3.15rem;
+    --phone-y: 0rem;
+    --phone-rotate: -7deg;
+  }
+  .project-card:hover .visual--phone .device-mockup--right,
+  .visual--phone:hover .device-mockup--right {
+    --phone-x: 3.15rem;
+    --phone-y: 0rem;
+    --phone-rotate: 7deg;
+  }
+  .project-card:hover .visual--desktop .device-mockup,
+  .visual--desktop:hover .device-mockup { transform: translate3d(0, 0, 0) scale(1); }
   .hero__bird { animation: none; }
   .experience__detail-content { animation: none; }
   .experience__main { --experience-scroll-shift: 0rem !important; transition-duration: 0.01ms; }
@@ -555,4 +635,12 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
   .theme-toggle:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 761px) {
+  .project-card:hover .visual--phone .device-mockup--main,
+  .visual--phone:hover .device-mockup--main,
+  .project-card:hover .visual--phone .device-mockup--left,
+  .visual--phone:hover .device-mockup--left,
+  .project-card:hover .visual--phone .device-mockup--right,
+  .visual--phone:hover .device-mockup--right { --phone-y: 0.75rem; }
 }
