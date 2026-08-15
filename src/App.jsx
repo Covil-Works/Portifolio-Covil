@@ -115,7 +115,7 @@ const technologies = [
 ]
 
 const projects = [
-  { name: 'SplitUp', stack: 'Kotlin · PostgreSQL', device: 'phone', image: suMain, imageAlt: 'Tela principal do SplitUp', phoneImages: { left: suComanda, right: suAmigos } },
+  { name: 'SplitUp', stack: 'Kotlin · PostgreSQL', device: 'phone', image: suMain, imageAlt: 'Tela principal do SplitUp', phoneImages: { left: suComanda, right: suAmigos }, rotatePhonePreview: true },
   { name: 'Projeto B', stack: 'Next.js · PostgreSQL', device: 'desktop', image: null, imageAlt: 'Tela do Projeto B' },
   { name: 'Projeto C', stack: 'Java · Spring', device: 'desktop', image: null, imageAlt: 'Tela do Projeto C' },
   { name: 'Projeto D', stack: 'Produto · Comunidade', device: 'phone', image: null, imageAlt: 'Tela do Projeto D' },

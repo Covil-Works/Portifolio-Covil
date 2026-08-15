@@ -442,7 +442,7 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
 .device-mockup {
   position: relative;
   background: oklch(0.18 0.01 72);
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms ease-out;
 }
 .device-mockup__screen { overflow: hidden; background: oklch(0.88 0.01 72); }
 .device-mockup__screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
@@ -456,6 +456,11 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   width: 100%;
   height: 100%;
   place-items: end center;
+}
+.phone-preview--cycling .device-mockup {
+  transition-duration: 720ms, 520ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-out;
+  will-change: transform, opacity;
 }
 .visual--phone .device-mockup {
   --phone-x: 0rem;
