@@ -81,7 +81,20 @@ function ProjectCard({ project, index }) {
           </div>
         ) : (
           <div className="device-mockup">
-            {renderScreen()}
+            {project.carouselImages ? (
+              <div className="desktop-preview__screen" aria-label={`${project.name} - telas do projeto`}>
+                <div className="desktop-preview__track">
+                  {project.carouselImages.map((image, imageIndex) => (
+                    <img
+                      key={image}
+                      src={image}
+                      alt={`${project.name} tela ${imageIndex + 1}`}
+                      className="desktop-preview__image"
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : renderScreen()}
           </div>
         )}
       </div>
