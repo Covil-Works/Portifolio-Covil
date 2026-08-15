@@ -59,7 +59,7 @@ function ProjectCard({ project, index }) {
       <div className="project-card__meta"><span>0{index + 1}</span><span>Ver projeto ↗</span></div>
       <h3>{project.name}</h3>
       <div
-        className={'project-card__visual visual--' + project.device}
+        className={'project-card__visual visual--' + project.device + (project.name === 'SplitUp' ? ' project-card__visual--splitup' : '')}
         onMouseEnter={canRotatePhonePreview ? startPhoneRotation : undefined}
         onMouseLeave={canRotatePhonePreview ? stopPhoneRotation : undefined}
       >
