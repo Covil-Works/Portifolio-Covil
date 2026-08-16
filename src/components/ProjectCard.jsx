@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const PHONE_ROTATION_ORDER = ['main', 'left', 'right']
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project }) {
   const [phoneRotationStep, setPhoneRotationStep] = useState(0)
   const [isPhoneCycling, setIsPhoneCycling] = useState(false)
   const [desktopCarouselStep, setDesktopCarouselStep] = useState(0)
@@ -88,13 +88,16 @@ function ProjectCard({ project, index }) {
 
   return (
     <article className="project-card">
-      <div className="project-card__meta"><span>0{index + 1}</span><span>Ver projeto ↗</span></div>
       <h3>{project.name}</h3>
-      <div
+      <a
         className={'project-card__visual visual--' + project.device + (project.name === 'SplitUp' ? ' project-card__visual--splitup' : '') + (project.name === 'MyWL' ? ' project-card__visual--mywl' : '')}
+        href={project.href}
+        target="_blank"
+        rel="noreferrer"
         onMouseEnter={canAutoPreview ? startAutoPreview : undefined}
         onMouseLeave={canAutoPreview ? stopAutoPreview : undefined}
       >
+        <span className="project-card__more">Ver Mais <span aria-hidden="true">↗</span></span>
         {project.device === 'phone' ? (
           <div className={[
             'phone-preview',
@@ -129,8 +132,8 @@ function ProjectCard({ project, index }) {
             ) : renderScreen()}
           </div>
         )}
-      </div>
-      <p>{project.stack}</p>
+      </a>
+      {project.details && <p className="project-card__description">{project.details}</p>}
     </article>
   )
 }
