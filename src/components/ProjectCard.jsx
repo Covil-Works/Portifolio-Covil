@@ -11,6 +11,7 @@ function ProjectCard({ project }) {
   const canRotatePhonePreview = project.device === 'phone' && project.rotatePhonePreview
   const canRotateDesktopPreview = project.device === 'desktop' && project.carouselImages?.length > 1
   const canAutoPreview = canRotatePhonePreview || canRotateDesktopPreview
+  const desktopCarouselSize = project.carouselImages?.length ?? 0
 
   const stopPhoneRotation = () => {
     if (phoneRotationTimer.current) {
@@ -90,7 +91,7 @@ function ProjectCard({ project }) {
     <article className="project-card">
       <h3>{project.name}</h3>
       <a
-        className={'project-card__visual visual--' + project.device + (project.name === 'SplitUp' ? ' project-card__visual--splitup' : '') + (project.name === 'MyWL' ? ' project-card__visual--mywl' : '')}
+        className={'project-card__visual visual--' + project.device + (project.name === 'SplitUp' ? ' project-card__visual--splitup' : '') + (project.name === 'MyWL' ? ' project-card__visual--mywl' : '') + (project.name === 'QuantumNet' ? ' project-card__visual--quantumnet' : '')}
         href={project.href}
         target="_blank"
         rel="noreferrer"
@@ -119,13 +120,13 @@ function ProjectCard({ project }) {
           <div className="device-mockup">
             {project.carouselImages ? (
               <div className="desktop-preview__screen" aria-label={`${project.name} - telas do projeto`}>
-                <div className="desktop-preview__track" style={{ transform: `translateX(-${desktopCarouselStep * 33.333333}%)` }}>
+                <div className="desktop-preview__track" style={{ width: `${desktopCarouselSize * 100}%`, transform: `translateX(-${desktopCarouselStep * (100 / desktopCarouselSize)}%)` }}>
                   {project.carouselImages.map((image, imageIndex) => (
                     <img
                       key={image}
                       src={image}
                       alt={`${project.name} tela ${imageIndex + 1}`}
-                      className="desktop-preview__image"
+                      className="desktop-preview__image" style={{ flexBasis: `${100 / desktopCarouselSize}%`, width: `${100 / desktopCarouselSize}%` }}
                     />
                   ))}
                 </div>
