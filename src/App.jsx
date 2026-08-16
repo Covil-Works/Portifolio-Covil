@@ -97,12 +97,12 @@ const experiences = [
   },
   {
     name: 'Covil',
-    context: 'Empresa cofundada · 2026 - Atual',
+    context: 'Grupo cofundado · 2026 - Atual',
     summary: 'Produtos, clientes e comunidade',
     description: [
       'Cofundei a Covil em 2026 convidando amigos para criar soluções de software, prospectar clientes e desenvolver produtos próprios e para terceiros.',
       'Trabalhamos com aplicativos Android em Kotlin, sistemas web em React e Next.js, backends em Java com Spring Boot e bancos relacionais com PostgreSQL.',
-      'Além dos projetos comerciais, criamos soluções open source e damos aulas sobre desenvolvimento, contribuindo com a comunidade dev enquanto a empresa segue ativa.',
+      'Além dos projetos comerciais, criamos soluções open source e damos aulas sobre desenvolvimento, contribuindo com a comunidade dev enquanto o grupo segue ativo.',
     ],
     cta: { label: 'Conhecer a Covil', href: 'https://covildev.com', external: true },
   },
