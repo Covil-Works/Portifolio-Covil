@@ -120,8 +120,8 @@ const technologies = [
 ]
 
 const projects = [
-  { name: 'SplitUp', details: 'Aplicativo mobile - Kotlin · Room · Android', href: 'https://covildev.com/splitup', stack: 'Kotlin · PostgreSQL', device: 'phone', image: suMain, imageAlt: 'Tela principal do SplitUp', phoneImages: { left: suComanda, right: suAmigos }, rotatePhonePreview: true },
-  { name: 'MyWL', details: 'Aplicação web - Next.js · PostgreSQL · Vercel', href: 'https://covildev.com/mywl', stack: 'Next.js · PostgreSQL', device: 'desktop', image: null, imageAlt: 'Tela do MyWL', carouselImages: [mywl1, mywl2, mywl3] },
+  { name: 'SplitUp', description: 'App Mobile Android que ajuda a dividir contas entre amigos em bares, restaurantes e supermercados.', details: 'Kotlin · Room · Android', href: 'https://covildev.com/splitup', stack: 'Kotlin · PostgreSQL', device: 'phone', image: suMain, imageAlt: 'Tela principal do SplitUp', phoneImages: { left: suComanda, right: suAmigos }, rotatePhonePreview: true },
+  { name: 'MyWL', description: 'Aplicação Web para uma wishlist global compartilhada para presentes, aniversário, casamentos, etc.', details: 'Next.js · PostgreSQL · Vercel', href: 'https://covildev.com/mywl', stack: 'Next.js · PostgreSQL', device: 'desktop', image: null, imageAlt: 'Tela do MyWL', carouselImages: [mywl1, mywl2, mywl3] },
   { name: 'Projeto C', stack: 'Java · Spring', device: 'desktop', image: null, imageAlt: 'Tela do Projeto C' },
   { name: 'Projeto D', stack: 'Produto · Comunidade', device: 'phone', image: null, imageAlt: 'Tela do Projeto D' },
 ]

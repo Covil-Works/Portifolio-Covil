@@ -97,7 +97,8 @@ function ProjectCard({ project }) {
         onMouseEnter={canAutoPreview ? startAutoPreview : undefined}
         onMouseLeave={canAutoPreview ? stopAutoPreview : undefined}
       >
-        <span className="project-card__more">Ver Mais <span aria-hidden="true">↗</span></span>
+        {project.description && <span className="project-card__intro">{project.description}</span>}
+        <span className="project-card__more">Ver mais <span aria-hidden="true">↗</span></span>
         {project.device === 'phone' ? (
           <div className={[
             'phone-preview',
