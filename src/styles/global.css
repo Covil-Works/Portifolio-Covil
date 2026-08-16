@@ -633,6 +633,8 @@ h2 { margin: 0.5rem 0 0; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.8
   .hero__firefly--2 { --firefly-size: 2px; }
   .hero__firefly--3 { --firefly-size: 1px; }
   .hero__firefly--4 { --firefly-size: 3px; }
+  .visual--phone .device-mockup { width: min(50%, 13rem); --phone-y: 2.5rem; }
+  .visual--phone .device-mockup__screen { width: calc(100% + 2px); margin-right: -2px; }
   .hero {
     --composition-width: calc(294.7368421svh - 117.8947368px);
     --hero-photo-size: clamp(6rem, 10.8vw, 9.6rem);
