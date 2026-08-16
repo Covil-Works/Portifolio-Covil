@@ -124,7 +124,7 @@ const technologies = [
 const projects = [
   { name: 'SplitUp', description: 'App Mobile Android que ajuda a dividir contas entre amigos em bares, restaurantes e supermercados.', details: 'Kotlin · Room · Android', href: 'https://covildev.com/splitup', stack: 'Kotlin · PostgreSQL', device: 'phone', image: suMain, imageAlt: 'Tela principal do SplitUp', phoneImages: { left: suComanda, right: suAmigos }, rotatePhonePreview: true },
   { name: 'MyWL', description: 'Aplicação Web para uma wishlist global compartilhada para presentes, aniversário, casamentos, etc.', details: 'Next.js · PostgreSQL · Vercel', href: 'https://covildev.com/mywl', stack: 'Next.js · PostgreSQL', device: 'desktop', image: null, imageAlt: 'Tela do MyWL', carouselImages: [mywl1, mywl2, mywl3] },
-  { name: 'QuantumNet', description: 'Simulador de Redes Quânticas para pesquisa e desenvolvimento publicado no Simpósio Brasileiro de Redes de Computadores.', details: 'Simulador · Python · Docker', device: 'desktop', image: null, imageAlt: 'Tela do QuantumNet', carouselImages: [qn1, qn2] },
+  { name: 'QuantumNet', description: 'Pesquisa e desenvolvimento em Redes Quânticas publicado no Simpósio Brasileiro de Redes de Computadores.', details: 'Simulador · Python · Docker', href: 'https://sol.sbc.org.br/index.php/sbrc_estendido/article/view/42593', device: 'desktop', image: null, imageAlt: 'Tela do QuantumNet', carouselImages: [qn1, qn2] },
   { name: 'Projeto D', stack: 'Produto · Comunidade', device: 'phone', image: null, imageAlt: 'Tela do Projeto D' },
 ]
 
